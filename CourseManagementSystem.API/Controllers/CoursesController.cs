@@ -80,7 +80,7 @@ namespace CourseManagementSystem.API.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                return BadRequest();
+                return BadRequest(new { Message = ex.Message });
             }
             catch (Exception ex)
             {
@@ -98,7 +98,7 @@ namespace CourseManagementSystem.API.Controllers
             }
             catch (KeyNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(new { Message = ex.Message });
             }
             catch (Exception ex)
             {
