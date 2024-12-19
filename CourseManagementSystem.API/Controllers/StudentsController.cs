@@ -3,7 +3,6 @@ using CourseManagementSystem.API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
 
 namespace CourseManagementSystem.API.Controllers
 {
@@ -18,6 +17,10 @@ namespace CourseManagementSystem.API.Controllers
             _studentService = studentService;
         }
 
+        /// <summary>
+        /// Retrieves all students.
+        /// </summary>
+        /// <returns>A list of students.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
         {
@@ -32,6 +35,11 @@ namespace CourseManagementSystem.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Retrieves a student by ID.
+        /// </summary>
+        /// <param name="id">The ID of the student.</param>
+        /// <returns>The student with the specified ID.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudent(int id)
         {
@@ -50,6 +58,11 @@ namespace CourseManagementSystem.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Creates a new student.
+        /// </summary>
+        /// <param name="student">The student to create.</param>
+        /// <returns>The newly created student.</returns>
         [HttpPost]
         public async Task<ActionResult<Student>> CreateStudent(Student student)
         {
@@ -68,6 +81,12 @@ namespace CourseManagementSystem.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates an existing student.
+        /// </summary>
+        /// <param name="id">The ID of the student to update.</param>
+        /// <param name="student">The updated student information.</param>
+        /// <returns>No content if successful.</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateStudent(int id, Student student)
         {
@@ -91,6 +110,11 @@ namespace CourseManagementSystem.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes a student by ID.
+        /// </summary>
+        /// <param name="id">The ID of the student to delete.</param>
+        /// <returns>No content if successful.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStudent(int id)
         {

@@ -1,6 +1,8 @@
 ﻿using CourseManagementSystem.API.Models;
 using CourseManagementSystem.API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CourseManagementSystem.API.Controllers
 {
@@ -15,6 +17,10 @@ namespace CourseManagementSystem.API.Controllers
             _courseService = courseService;
         }
 
+        /// <summary>
+        /// Retrieves all courses.
+        /// </summary>
+        /// <returns>A list of courses.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
@@ -29,6 +35,11 @@ namespace CourseManagementSystem.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Retrieves a course by ID.
+        /// </summary>
+        /// <param name="id">The ID of the course.</param>
+        /// <returns>The course with the specified ID.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Course>> GetCourse(int id)
         {
@@ -46,25 +57,36 @@ namespace CourseManagementSystem.API.Controllers
                 return StatusCode(500, new { Message = "An error occurred while fetching the course.", Details = ex.Message });
             }
         }
-        
-        [HttpPost("{courseType}")] 
-        public async Task<ActionResult<Course>> CreateCourse(string courseType) 
-        { 
-            try 
+
+        /// <summary>
+        /// Creates a new course.
+        /// </summary>
+        /// <param name="courseType">The type of the course to create.</param>
+        /// <returns>The newly created course.</returns>
+        [HttpPost("{courseType}")]
+        public async Task<ActionResult<Course>> CreateCourse(string courseType)
+        {
+            try
             {
-                var newCourse = await _courseService.CreateCourseAsync(courseType); 
-                return CreatedAtAction(nameof(GetCourse), new { id = newCourse.Id }, newCourse); 
-            } 
-            catch (ArgumentException ex) 
-            { 
-                return BadRequest(new { Message = ex.Message }); 
-            } 
-            catch (Exception ex) 
-            { 
-                return StatusCode(500, new { Message = "An error occurred while creating the course.", Details = ex.Message }); 
-            } 
+                var newCourse = await _courseService.CreateCourseAsync(courseType);
+                return CreatedAtAction(nameof(GetCourse), new { id = newCourse.Id }, newCourse);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while creating the course.", Details = ex.Message });
+            }
         }
 
+        /// <summary>
+        /// Updates an existing course.
+        /// </summary>
+        /// <param name="id">The ID of the course to update.</param>
+        /// <param name="course">The updated course information.</param>
+        /// <returns>No content if successful.</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCourse(int id, Course course)
         {
@@ -88,6 +110,11 @@ namespace CourseManagementSystem.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes a course by ID.
+        /// </summary>
+        /// <param name="id">The ID of the course to delete.</param>
+        /// <returns>No content if successful.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourse(int id)
         {

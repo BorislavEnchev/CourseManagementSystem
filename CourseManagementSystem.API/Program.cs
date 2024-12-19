@@ -9,6 +9,7 @@ using CourseManagementSystem.API.Factories.Interfaces;
 using CourseManagementSystem.API.Factories;
 using OnlineCourseManagementSystem.API.Factories;
 using CourseManagementSystem.API.Middleware;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +20,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllers();
 
 // Add Swagger services
-builder.Services.AddEndpointsApiExplorer(); 
-builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c => 
+{ 
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"; 
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile); 
+    c.IncludeXmlComments(xmlPath); 
+});
 
 // Register local services
 builder.Services.AddScoped<ICourseService, CourseService>();

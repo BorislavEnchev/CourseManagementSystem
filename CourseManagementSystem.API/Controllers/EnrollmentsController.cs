@@ -1,6 +1,8 @@
 ﻿using CourseManagementSystem.API.Models;
 using CourseManagementSystem.API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CourseManagementSystem.API.Controllers
 {
@@ -15,6 +17,10 @@ namespace CourseManagementSystem.API.Controllers
             _enrollmentService = enrollmentService;
         }
 
+        /// <summary>
+        /// Retrieves all enrollments.
+        /// </summary>
+        /// <returns>A list of enrollments.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Enrollment>>> GetEnrollments()
         {
@@ -29,6 +35,12 @@ namespace CourseManagementSystem.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Retrieves an enrollment by course ID and student ID.
+        /// </summary>
+        /// <param name="courseId">The ID of the course.</param>
+        /// <param name="studentId">The ID of the student.</param>
+        /// <returns>The enrollment with the specified course ID and student ID.</returns>
         [HttpGet("{courseId}/{studentId}")]
         public async Task<ActionResult<Enrollment>> GetEnrollment(int courseId, int studentId)
         {
@@ -47,6 +59,11 @@ namespace CourseManagementSystem.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Enrolls a student in a course.
+        /// </summary>
+        /// <param name="enrollment">The enrollment details.</param>
+        /// <returns>The newly created enrollment.</returns>
         [HttpPost]
         public async Task<ActionResult<Enrollment>> EnrollStudent(Enrollment enrollment)
         {
@@ -67,6 +84,13 @@ namespace CourseManagementSystem.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates an existing enrollment.
+        /// </summary>
+        /// <param name="courseId">The ID of the course.</param>
+        /// <param name="studentId">The ID of the student.</param>
+        /// <param name="enrollment">The updated enrollment details.</param>
+        /// <returns>No content if successful.</returns>
         [HttpPut("{courseId}/{studentId}")]
         public async Task<IActionResult> UpdateEnrollment(int courseId, int studentId, Enrollment enrollment)
         {
@@ -90,6 +114,13 @@ namespace CourseManagementSystem.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates the progress of an enrollment.
+        /// </summary>
+        /// <param name="courseId">The ID of the course.</param>
+        /// <param name="studentId">The ID of the student.</param>
+        /// <param name="progress">The updated progress.</param>
+        /// <returns>No content if successful.</returns>
         [HttpPut("{courseId}/{studentId}/progress")]
         public async Task<IActionResult> UpdateEnrollmentProgress(int courseId, int studentId, int progress)
         {
@@ -104,6 +135,12 @@ namespace CourseManagementSystem.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes an enrollment by course ID and student ID.
+        /// </summary>
+        /// <param name="courseId">The ID of the course.</param>
+        /// <param name="studentId">The ID of the student.</param>
+        /// <returns>No content if successful.</returns>
         [HttpDelete("{courseId}/{studentId}")]
         public async Task<IActionResult> DeleteEnrollment(int courseId, int studentId)
         {
